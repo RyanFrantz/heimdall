@@ -1,0 +1,12 @@
+[heimdall]
+version = "0.0.1"
+serverport = 80
+
+[ldap]
+serveraddress = "ldap.example.com"
+serverport = 389
+searchbase = "dc=example,dc=com"
+searchsizelimit = 0
+searchtimelimit = 0
+user = "uid=heimdall,ou=People,dc=example,dc=com"
+password = "yggdrasil"
