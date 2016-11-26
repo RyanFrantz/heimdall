@@ -6,7 +6,7 @@ import (
     "github.com/go-ldap/ldap"
 )
 
-// 'config' is read in main.go
+// 'hconfig' is instantiated in main.go
 var ldap_server     = hconfig.Ldap.ServerAddress
 var ldap_port       = hconfig.Ldap.ServerPort
 var ldap_base       = hconfig.Ldap.SearchBase
