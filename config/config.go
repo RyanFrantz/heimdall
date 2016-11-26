@@ -1,4 +1,4 @@
-package main
+package config
 
 // Initial inspiration from https://blog.gopheracademy.com/advent-2014/reading-config-files-the-go-way/
 

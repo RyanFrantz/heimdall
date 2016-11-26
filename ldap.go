@@ -7,13 +7,13 @@ import (
 )
 
 // 'config' is read in main.go
-var ldap_server     = config.Ldap.ServerAddress
-var ldap_port       = config.Ldap.ServerPort
-var ldap_base       = config.Ldap.SearchBase
-var ldap_size_limit = config.Ldap.SearchSizeLimit
-var ldap_time_limit = config.Ldap.SearchTimeLimit
-var ldap_user       = config.Ldap.User
-var ldap_password   = config.Ldap.Password
+var ldap_server     = hconfig.Ldap.ServerAddress
+var ldap_port       = hconfig.Ldap.ServerPort
+var ldap_base       = hconfig.Ldap.SearchBase
+var ldap_size_limit = hconfig.Ldap.SearchSizeLimit
+var ldap_time_limit = hconfig.Ldap.SearchTimeLimit
+var ldap_user       = hconfig.Ldap.User
+var ldap_password   = hconfig.Ldap.Password
 
 func ldapSearch(ldap_filter string, attributes []string) (searchResult *ldap.SearchResult) {
     l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", ldap_server, ldap_port))
