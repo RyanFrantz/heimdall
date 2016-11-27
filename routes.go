@@ -4,6 +4,7 @@ import (
     "fmt"
     "encoding/json"
     "net/http"
+    "github.com/RyanFrantz/heimdall/providers/ldap"
     "github.com/julienschmidt/httprouter"
 )
 
@@ -16,7 +17,7 @@ func getGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     w.Header().Set("Cache-Control", "max-age=3600")
 
     attributes := []string{"cn", "gidNumber", "memberUid"}
-    results := getLDAPGroup(name, attributes)
+    results := ldap.GetLDAPGroup(name, attributes)
     var groups Groups
     for _, entry := range results.Entries {
         groupName := entry.GetAttributeValue("cn")
@@ -31,7 +32,7 @@ func getGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 func getUser (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     name := ps.ByName("name")
     attributes := []string{"uid", "cn", "uidNumber", "gidNumber", "givenName", "sn", "description", "homeDirectory"}
-    results := getLDAPUser(name, attributes)
+    results := ldap.GetLDAPUser(name, attributes)
     var users Users
     for _, entry := range results.Entries {
         uid := entry.GetAttributeValue("uid")

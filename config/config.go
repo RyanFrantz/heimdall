@@ -7,6 +7,7 @@ import (
     "log"
     "os"
     "github.com/BurntSushi/toml"
+    //"github.com/revel/config" // An INI-style config parser.
     //"github.com/spf13/viper" // Perhaps one day when we need more features.
 )
 
@@ -30,7 +31,7 @@ type Config struct {
     Ldap        LdapConfig
 }
 
-func ReadConfig() Config {
+func readConfig() Config {
     configfile := "./heimdall.conf"
     _, statErr := os.Stat(configfile)
     if statErr != nil {
@@ -42,6 +43,17 @@ func ReadConfig() Config {
     if _, decodeErr := toml.DecodeFile(configfile, &config); decodeErr != nil {
         decodeMsg := fmt.Sprintf("ERROR: Cannot parse '%s': %v\n", configfile, decodeErr.Error())
         log.Fatal(decodeMsg)
+    }
+    return config
+}
+
+// GetConfig() returns a singleton Config.
+// We only want to read the config once.
+var config *Config
+func GetConfig() *Config {
+    if config == nil {
+        cfg := readConfig()
+        config = &cfg
     }
     return config
 }

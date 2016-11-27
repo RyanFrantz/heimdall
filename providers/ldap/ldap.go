@@ -1,24 +1,25 @@
-package main
+package ldap
 
 import (
     "fmt"
     "log"
+    "github.com/RyanFrantz/heimdall/config"
     "github.com/go-ldap/ldap"
 )
 
-// 'hconfig' is instantiated in main.go
-var ldap_server     = hconfig.Ldap.ServerAddress
-var ldap_port       = hconfig.Ldap.ServerPort
-var ldap_base       = hconfig.Ldap.SearchBase
-var ldap_size_limit = hconfig.Ldap.SearchSizeLimit
-var ldap_time_limit = hconfig.Ldap.SearchTimeLimit
-var ldap_user       = hconfig.Ldap.User
-var ldap_password   = hconfig.Ldap.Password
+var cfg = config.GetConfig()
+var ldap_server     = cfg.Ldap.ServerAddress
+var ldap_port       = cfg.Ldap.ServerPort
+var ldap_base       = cfg.Ldap.SearchBase
+var ldap_size_limit = cfg.Ldap.SearchSizeLimit
+var ldap_time_limit = cfg.Ldap.SearchTimeLimit
+var ldap_user       = cfg.Ldap.User
+var ldap_password   = cfg.Ldap.Password
 
 func ldapSearch(ldap_filter string, attributes []string) (searchResult *ldap.SearchResult) {
     l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", ldap_server, ldap_port))
     if err != nil {
-        errorMessage := fmt.Sprintf("Failed to connect to %s:%d - %s", ldap_server, ldap_port, err)
+        errorMessage := fmt.Sprintf("Failed to connect to host '%s' on port '%d' - %s", ldap_server, ldap_port, err)
         log.Fatal(errorMessage)
     } else {
         //log.Printf("Connect OK")
@@ -50,7 +51,7 @@ func ldapSearch(ldap_filter string, attributes []string) (searchResult *ldap.Sea
     return searchResult
 }
 
-func getLDAPGroup(name string, attributes []string) (searchResult *ldap.SearchResult) {
+func GetLDAPGroup(name string, attributes []string) (searchResult *ldap.SearchResult) {
     var ldap_filter string
     if name == "all" {
         ldap_filter = "(&(objectClass=posixGroup))"
@@ -61,7 +62,7 @@ func getLDAPGroup(name string, attributes []string) (searchResult *ldap.SearchRe
     return searchResult
 }
 
-func getLDAPUser(name string, attributes []string) (searchResult *ldap.SearchResult) {
+func GetLDAPUser(name string, attributes []string) (searchResult *ldap.SearchResult) {
     var ldap_filter string
     if name == "all" {
         ldap_filter = "(&(objectClass=inetOrgPerson))"

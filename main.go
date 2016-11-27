@@ -7,11 +7,10 @@ import (
     "github.com/julienschmidt/httprouter"
 )
 
-// Global heimdall config variable.
-var hconfig = config.ReadConfig()
+var cfg = config.GetConfig()
 
 func main() {
-    log.Printf("Starting Heimdall v%s", hconfig.Heimdall.Version)
+    log.Printf("Starting Heimdall v%s", cfg.Heimdall.Version)
     router := httprouter.New()
     router.GET("/", indexResponse)
     router.GET("/ldap/group/:name", getGroup)
