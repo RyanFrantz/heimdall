@@ -12,12 +12,12 @@ func indexResponse (w http.ResponseWriter, r *http.Request, ps httprouter.Params
     fmt.Fprintf(w, "I am Heimdall\n")
 }
 
-func getGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func getLDAPGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     name := ps.ByName("name")
     w.Header().Set("Cache-Control", "max-age=3600")
 
     attributes := []string{"cn", "gidNumber", "memberUid"}
-    results := ldap.GetLDAPGroup(name, attributes)
+    results := ldap.GetGroup(name, attributes)
     var groups Groups
     for _, entry := range results.Entries {
         groupName := entry.GetAttributeValue("cn")
@@ -29,10 +29,10 @@ func getGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     json.NewEncoder(w).Encode(groups)
 }
 
-func getUser (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func getLDAPUser (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     name := ps.ByName("name")
     attributes := []string{"uid", "cn", "uidNumber", "gidNumber", "givenName", "sn", "description", "homeDirectory"}
-    results := ldap.GetLDAPUser(name, attributes)
+    results := ldap.GetUser(name, attributes)
     var users Users
     for _, entry := range results.Entries {
         uid := entry.GetAttributeValue("uid")

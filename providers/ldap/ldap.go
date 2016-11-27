@@ -51,7 +51,7 @@ func ldapSearch(ldap_filter string, attributes []string) (searchResult *ldap.Sea
     return searchResult
 }
 
-func GetLDAPGroup(name string, attributes []string) (searchResult *ldap.SearchResult) {
+func GetGroup(name string, attributes []string) (searchResult *ldap.SearchResult) {
     var ldap_filter string
     if name == "all" {
         ldap_filter = "(&(objectClass=posixGroup))"
@@ -62,7 +62,7 @@ func GetLDAPGroup(name string, attributes []string) (searchResult *ldap.SearchRe
     return searchResult
 }
 
-func GetLDAPUser(name string, attributes []string) (searchResult *ldap.SearchResult) {
+func GetUser(name string, attributes []string) (searchResult *ldap.SearchResult) {
     var ldap_filter string
     if name == "all" {
         ldap_filter = "(&(objectClass=inetOrgPerson))"

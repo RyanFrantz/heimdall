@@ -13,8 +13,8 @@ func main() {
     log.Printf("Starting Heimdall v%s", cfg.Heimdall.Version)
     router := httprouter.New()
     router.GET("/", indexResponse)
-    router.GET("/ldap/group/:name", getGroup)
-    router.GET("/ldap/user/:name", getUser)
+    router.GET("/ldap/group/:name", getLDAPGroup)
+    router.GET("/ldap/user/:name", getLDAPUser)
 
     // Start me up!
     log.Fatal(http.ListenAndServe(":8080", router))
