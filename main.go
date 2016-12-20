@@ -15,6 +15,7 @@ func main() {
     router.GET("/", indexResponse)
     router.GET("/ldap/group/:name", getLDAPGroup)
     router.GET("/ldap/user/:name", getLDAPUser)
+    router.GET("/chef/client/:name", getChefClient)
 
     // Start me up!
     log.Fatal(http.ListenAndServe(":8080", router))

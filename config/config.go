@@ -16,6 +16,10 @@ type HeimdallConfig struct {
     ServerPort  int
 }
 
+type ChefConfig struct {
+    ServerAddress   string
+}
+
 type LdapConfig struct {
     ServerAddress   string
     ServerPort      int
@@ -28,6 +32,7 @@ type LdapConfig struct {
 
 type Config struct {
     Heimdall    HeimdallConfig
+    Chef        ChefConfig
     Ldap        LdapConfig
 }
 

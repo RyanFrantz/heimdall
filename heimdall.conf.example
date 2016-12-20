@@ -2,6 +2,9 @@
 version = "0.0.1"
 serverport = 80
 
+[chef]
+serveraddress = "https://chef.example.com"
+
 [ldap]
 serveraddress = "ldap.example.com"
 serverport = 389

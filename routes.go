@@ -4,12 +4,21 @@ import (
     "fmt"
     "encoding/json"
     "net/http"
+    "github.com/RyanFrantz/heimdall/providers/chef"
     "github.com/RyanFrantz/heimdall/providers/ldap"
     "github.com/julienschmidt/httprouter"
 )
 
 func indexResponse (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     fmt.Fprintf(w, "I am Heimdall\n")
+}
+
+func getChefClient (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    name := ps.ByName("name")
+    w.Header().Set("Cache-Control", "max-age=3600")
+
+    results := chef.GetClient(name)
+    json.NewEncoder(w).Encode(results)
 }
 
 func getLDAPGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
