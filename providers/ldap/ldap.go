@@ -69,7 +69,11 @@ func GetUser(name string, attributes []string) (searchResult *ldap.SearchResult)
     } else {
         ldap_filter = fmt.Sprintf("(&(objectClass=inetOrgPerson)(uid=%s))", name)
     }
-    //attributes := []string{"dn", "cn", "memberUid"}
     searchResult = ldapSearch(ldap_filter, attributes)
     return searchResult
 }
+
+/*
+func GetUserToGroupMap(name string) (searchResult *ldap.SearchResult) {
+}
+*/

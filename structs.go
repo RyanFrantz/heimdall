@@ -9,6 +9,9 @@ type Group struct {
 
 type Groups []Group
 
+// Create a map whose key is a string and whose value is a slice of strings.
+//type GroupMap {}
+
 type User struct {
     Dn              string  `json:"dn"`
     Uid             string  `json:"uid"`
