@@ -14,10 +14,18 @@ func indexResponse (w http.ResponseWriter, r *http.Request, ps httprouter.Params
 }
 
 func getChefClient (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-    name := ps.ByName("name")
+    name := ps.ByName("client")
     w.Header().Set("Cache-Control", "max-age=3600")
 
     results := chef.GetClient(name)
+    json.NewEncoder(w).Encode(results)
+}
+
+func getChefGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    group_name := ps.ByName("group")
+    w.Header().Set("Cache-Control", "max-age=3600")
+
+    results := chef.GetGroup(group_name)
     json.NewEncoder(w).Encode(results)
 }
 
