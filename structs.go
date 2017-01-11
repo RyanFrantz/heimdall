@@ -1,18 +1,18 @@
 package main
 
-type Group struct {
+type LdapGroup struct {
     Dn              string  `json:"dn"`
     Name            string  `json:"name"`
     Gid             string  `json:"gid"`
     Members         []string `json:"members"`
 }
 
-type Groups []Group
+type LdapGroups []LdapGroup
 
 // Create a map whose key is a string and whose value is a slice of strings.
-//type GroupMap {}
+//type LdapGroupMap {}
 
-type User struct {
+type LdapUser struct {
     Dn              string  `json:"dn"`
     Uid             string  `json:"uid"`
     GivenName       string  `json:"givenName"`
@@ -23,4 +23,4 @@ type User struct {
     HomeDirectory   string  `json:"homeDirectory"`
 }
 
-type Users []User
+type LdapUsers []LdapUser
