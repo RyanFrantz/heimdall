@@ -14,9 +14,10 @@ func main() {
     router := httprouter.New()
     router.GET("/", indexResponse)
     router.GET("/ldap/group/:name", getLDAPGroup)
-    router.GET("/ldap/user/:name", getLDAPUser)
-    router.GET("/chef/client/:client", getChefClient)
+    router.GET("/ldap/user/:name", getLdapUserForRequest)
+    router.GET("/chef/client/:client", getChefClientForRequest)
     router.GET("/chef/group/:group", getChefGroup)
+    router.GET("/report/user/:name", getUserReport)
 
     // Start me up!
     log.Fatal(http.ListenAndServe(":8080", router))

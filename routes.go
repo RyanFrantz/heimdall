@@ -7,17 +7,23 @@ import (
     "github.com/RyanFrantz/heimdall/plugins/chef"
     "github.com/RyanFrantz/heimdall/plugins/ldap"
     "github.com/julienschmidt/httprouter"
+    frantz_chef "github.com/RyanFrantz/chef"
 )
 
 func indexResponse (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     fmt.Fprintf(w, "I am Heimdall\n")
 }
 
-func getChefClient (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func getChefClient (name string) (chef_client frantz_chef.ApiClient) {
+    chef_client = chef.GetClient(name)
+    return chef_client
+}
+
+// Route handler for looking up Chef client objects.
+func getChefClientForRequest (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     name := ps.ByName("client")
     w.Header().Set("Cache-Control", "max-age=3600")
-
-    results := chef.GetClient(name)
+    results := getChefClient(name)
     json.NewEncoder(w).Encode(results)
 }
 
@@ -46,11 +52,13 @@ func getLDAPGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params)
     json.NewEncoder(w).Encode(groups)
 }
 
-func getLDAPUser (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-    name := ps.ByName("name")
+// Look up an LDAP user object.
+// Expects the name of an LDAP user or the special keyword 'all' to look up all
+// LDAP users.
+// Returns an array of type LdapUsers.
+func getLdapUser (name string) (users LdapUsers) {
     attributes := []string{"uid", "cn", "uidNumber", "gidNumber", "givenName", "sn", "description", "homeDirectory"}
     results := ldap.GetUser(name, attributes)
-    var users LdapUsers
     for _, entry := range results.Entries {
         uid := entry.GetAttributeValue("uid")
         uidNumber := entry.GetAttributeValue("uidNumber")
@@ -70,6 +78,22 @@ func getLDAPUser (w http.ResponseWriter, r *http.Request, ps httprouter.Params) 
             HomeDirectory: homeDirectory}
         users = append(users, user)
     }
+    return users
+}
+
+// Route handler for looking up LDAP user objects.
+func getLdapUserForRequest (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    name := ps.ByName("name")
+    users := getLdapUser(name)
     w.Header().Set("Cache-Control", "max-age=3600")
     json.NewEncoder(w).Encode(users)
+}
+
+func getUserReport (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+    name := ps.ByName("name")
+    users := getLdapUser(name)
+    chef_client := getChefClient(name)
+    w.Header().Set("Cache-Control", "max-age=3600")
+    json.NewEncoder(w).Encode(users)
+    json.NewEncoder(w).Encode(chef_client)
 }
