@@ -7,10 +7,11 @@ Imagine on-boarding a new employee that needs a local LDAP account, an AWS
 account, and access to some internal service. Heimdall can conceptually ease
 administration of all accounts.
 
-## Providers
+## Plugins
 
-Heimdall's functionality is exposed via providers. Current providers include:
+Heimdall's functionality is exposed via plugins. Current plugins include:
 
+* Chef
 * LDAP
 
 ## Who was Heimdall?
@@ -18,3 +19,8 @@ Heimdall's functionality is exposed via providers. Current providers include:
 In Norse mythology [Heimdall](https://en.wikipedia.org/wiki/Heimdallr) was
 responsible for keeping watch at the Bifröst between Earth and Asgard. He
 is portrayed as knowing and seeing all souls.
+
+# NOTE
+
+Heimdall is not production-ready. It is currently under development as a
+read-only service while several designs and ideas are being tested.

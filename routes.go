@@ -4,8 +4,8 @@ import (
     "fmt"
     "encoding/json"
     "net/http"
-    "github.com/RyanFrantz/heimdall/providers/chef"
-    "github.com/RyanFrantz/heimdall/providers/ldap"
+    "github.com/RyanFrantz/heimdall/plugins/chef"
+    "github.com/RyanFrantz/heimdall/plugins/ldap"
     "github.com/julienschmidt/httprouter"
 )
 
