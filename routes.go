@@ -4,18 +4,18 @@ import (
     "fmt"
     "encoding/json"
     "net/http"
-    "github.com/RyanFrantz/heimdall/plugins/chef"
+    "github.com/RyanFrantz/heimdall/plugins/souschef"
     "github.com/RyanFrantz/heimdall/plugins/ldap"
     "github.com/julienschmidt/httprouter"
-    frantz_chef "github.com/RyanFrantz/chef"
+    "github.com/RyanFrantz/chef"
 )
 
 func indexResponse (w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
     fmt.Fprintf(w, "I am Heimdall\n")
 }
 
-func getChefClient (name string) (chef_client frantz_chef.ApiClient) {
-    chef_client = chef.GetClient(name)
+func getChefClient (name string) (chef_client chef.ApiClient) {
+    chef_client = souschef.GetClient(name)
     return chef_client
 }
 
@@ -31,7 +31,7 @@ func getChefGroup (w http.ResponseWriter, r *http.Request, ps httprouter.Params)
     group_name := ps.ByName("group")
     w.Header().Set("Cache-Control", "max-age=3600")
 
-    results := chef.GetGroup(group_name)
+    results := souschef.GetGroup(group_name)
     json.NewEncoder(w).Encode(results)
 }
 

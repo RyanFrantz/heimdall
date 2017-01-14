@@ -1,5 +1,9 @@
-package chef
+package souschef
 
+/* This package is named 'souschef' because it depends on go-chef/chef
+ * and we want to avoid name collisions.
+ * Also, it's clever.
+ */
 import (
     "log"
     "io/ioutil"
